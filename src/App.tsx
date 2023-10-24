@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Counter from './Counter';
 
 const messages = [
   "Learn React ⚛️",
@@ -11,20 +11,22 @@ const messages = [
 function App() {
 
   const [step, setStep] = useState(1);
-  let [test, updateName] = useState({ name: 'sajitha' })
+  const [isOpen, setIsOpen] = useState(true);
+  // let [test, updateName] = useState({ name: 'sajitha' })
 
 
   function handlePrevious() {
     if (step > 1) {
-      setStep(step - 1);
+      setStep(step => step - 1);
     }
     // test.name = 'sajj';
-    updateName({ name: 'hemm' })
+    // updateName({ name: 'hemm' })
   }
 
   function handleNext() {
     if (step < 3) {
-      setStep(step + 1);
+      setStep(step => step + 1);
+      setStep(step => step + 1);
     }
 
     // bad pratice , always use use update
@@ -32,22 +34,29 @@ function App() {
   }
 
   return (
-    <div className="steps">
-      <div className="numbers">
-        <div className={step >= 1 ? 'active' : ''}>1</div>
-        <div className={step >= 2 ? 'active' : ''}>2</div>
-        <div className={step >= 3 ? 'active' : ''}>3</div>
-      </div>
+    <div>
+      <button className='close' onClick={() => setIsOpen(is => !is)}>&times;</button>
+      {isOpen &&
+        <div className="steps">
+          <div className="numbers">
+            <div className={step >= 1 ? 'active' : ''}>1</div>
+            <div className={step >= 2 ? 'active' : ''}>2</div>
+            <div className={step >= 3 ? 'active' : ''}>3</div>
+          </div>
 
-      <p className="message">
-        Step {step}: {messages[step - 1]} {test.name}
-      </p>
+          <p className="message">
+            Step {step}: {messages[step - 1]}
+          </p>
 
-      <div className="buttons">
-        <button style={{ backgroundColor: '#7950f2', color: '#fff' }} onClick={handlePrevious}>Prevous</button>
-        <button style={{ backgroundColor: '#7950f2', color: '#fff' }} onClick={handleNext}>Next</button>
-      </div>
-    </div >
+          <div className="buttons">
+            <button style={{ backgroundColor: '#7950f2', color: '#fff' }} onClick={handlePrevious}>Prevous</button>
+            <button style={{ backgroundColor: '#7950f2', color: '#fff' }} onClick={handleNext}>Next</button>
+          </div>
+        </div >}
+
+
+      <Counter />
+    </div>
   );
 }
 
